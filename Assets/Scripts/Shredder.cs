@@ -14,6 +14,7 @@ public class Shredder : MonoBehaviour {
 
 		//if (col.gameObject.tag == "playerProjectile") {
 			Destroy (col.gameObject);
+
 		}
 	}
 

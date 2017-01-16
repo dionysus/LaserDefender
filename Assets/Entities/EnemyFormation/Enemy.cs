@@ -6,16 +6,19 @@ public class Enemy : MonoBehaviour {
 
 	public GameObject projectileSpawn;
 	public GameObject projectilePrefab;
-	public float projectileSpeed = 2.0f;
-	//public float firingRate = 1.0f;
 	public float health = 150f;
 	public float shotsPerSeconds = 0.5f;
+	public int scoreValue = 150;
 
-	private Rigidbody2D enemyProjectileRB;
+	public AudioClip soundDestroy;
+	//public AudioClip soundHit;
+
+	//private Rigidbody2D enemyProjectileRB;
+	private ScoreKeeper scoreKeeper;
 
 	void Start (){
 
-		//InvokeRepeating ("ProjectileFire", 0.000001f, firingRate);
+		scoreKeeper = GameObject.Find ("ScoreBox").GetComponent<ScoreKeeper> ();
 
 	}
 
@@ -37,8 +40,17 @@ public class Enemy : MonoBehaviour {
 
 			health -= playerProjectile.getDamage ();
 
+
 			if (health <= 0) {
+				
+				AudioSource.PlayClipAtPoint (soundDestroy, transform.position, 1.0f);
 				Destroy (gameObject);
+				scoreKeeper.Score (scoreValue);
+			
+			} else {
+			
+				//AudioSource.PlayClipAtPoint(soundHit, transform.position, 2.0f);
+
 			}
 		
 			playerProjectile.Hit ();
@@ -52,11 +64,8 @@ public class Enemy : MonoBehaviour {
 
 		Vector3 projectilePos = new Vector3 (projectileSpawn.transform.position.x, projectileSpawn.transform.position.y, 1.0f);
 
-		GameObject enemyProjectile = Instantiate (projectilePrefab, projectilePos, Quaternion.identity);
-
-		enemyProjectileRB = enemyProjectile.GetComponent<Rigidbody2D>();
-		enemyProjectileRB.velocity = new Vector3 (0f, -projectileSpeed, 0f);
-
+		//GameObject enemyProjectile = Instantiate (projectilePrefab, projectilePos, Quaternion.identity);
+		Instantiate (projectilePrefab, projectilePos, Quaternion.identity);
 	}
 
 }

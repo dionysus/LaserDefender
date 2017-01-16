@@ -6,17 +6,24 @@ public class enemyProjectile : MonoBehaviour {
 
 	public float damage = 50f;
 	public float projectileHealth = 50f;
+	public float projectileSpeed = 6f;
+	public AudioClip soundShoot;
+	public AudioClip soundHit;
 
-	Rigidbody2D projectileRB;
+	private Rigidbody2D projectileRB;
 
 	void Start (){
+		AudioSource.PlayClipAtPoint(soundShoot, transform.position);
+
+		projectileRB = GetComponent<Rigidbody2D>();
+		projectileRB.velocity = new Vector3 (0f, -projectileSpeed, 0f);
 
 	}
 
 	void Update (){
 
 		//Destroy self if velocity reduces to 0
-		if (this.GetComponent<Rigidbody2D>().velocity.y >= 0f) {Destroy (gameObject);}
+		if (this.GetComponent<Rigidbody2D>().velocity.y > projectileSpeed) {Destroy (gameObject);}
 
 	}
 
@@ -28,6 +35,7 @@ public class enemyProjectile : MonoBehaviour {
 
 	public void Hit(){
 
+		AudioSource.PlayClipAtPoint(soundHit, transform.position, 2.0f);
 		Destroy (gameObject);
 
 	}

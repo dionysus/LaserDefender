@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
 
-	public float playerHealth = 500f;
 	public float speed;
 
 	public GameObject projectile;
@@ -14,10 +13,12 @@ public class PlayerController : MonoBehaviour {
 	public float firingRate = 4.0f;
 
 	private Rigidbody2D playerProjectileRB;
+	private ScoreKeeper scoreKeeper;
+	private float playerHealth;
 
+	void Start (){
 
-	// Use this for initialization
-	void Start () {
+		scoreKeeper = GameObject.Find ("ScoreBox").GetComponent<ScoreKeeper> ();
 
 	}
 	
@@ -63,28 +64,24 @@ public class PlayerController : MonoBehaviour {
 
 	void ProjectileFire (){
 
-		GameObject playerProjectile = Instantiate (projectile, projectileSpawn.transform.position, Quaternion.identity);
-		playerProjectileRB = playerProjectile.GetComponent<Rigidbody2D>();
-		playerProjectileRB.velocity = new Vector3 (0f, projectileSpeed, 0f);
+		Instantiate (projectile, projectileSpawn.transform.position, Quaternion.identity);
+
+		//GameObject playerProjectile = Instantiate (projectile, projectileSpawn.transform.position, Quaternion.identity);
+		//playerProjectileRB = playerProjectile.GetComponent<Rigidbody2D>();
+		//playerProjectileRB.velocity = new Vector3 (0f, projectileSpeed, 0f);
 
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
 
 
-
 		enemyProjectile enemyProjectile = col.gameObject.GetComponent<enemyProjectile> ();
 
 		if (enemyProjectile) {
 
-			//Debug.Log ("player hit!!");
+			float hpHit = enemyProjectile.getDamage ();
 
-			playerHealth -= enemyProjectile.getDamage ();
-			Debug.Log (playerHealth);
-
-			if (playerHealth <= 0) {
-				Debug.Log ("dead");
-			}
+			scoreKeeper.HealthHit (hpHit);
 
 			enemyProjectile.Hit ();
 
