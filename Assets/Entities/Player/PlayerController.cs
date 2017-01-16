@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour {
 
 	private Rigidbody2D playerProjectileRB;
 	private ScoreKeeper scoreKeeper;
+
 	private float playerHealth;
 
 	void Start (){
@@ -29,14 +30,13 @@ public class PlayerController : MonoBehaviour {
 
 		if (Input.GetKey (KeyCode.A)) {
 
-			//playerRB.position += new Vector2 (-speed * Time.deltaTime, 0);
 			transform.position += Vector3.left * speed * Time.deltaTime;
 		}
 
 		if (Input.GetKey (KeyCode.D)) {
 
 			transform.position += Vector3.right * speed * Time.deltaTime;
-			//playerRB.position += new Vector2 (speed * Time.deltaTime, 0);
+
 		}
 
 		//// restrict player to the gamespace
@@ -66,11 +66,10 @@ public class PlayerController : MonoBehaviour {
 
 		Instantiate (projectile, projectileSpawn.transform.position, Quaternion.identity);
 
-		//GameObject playerProjectile = Instantiate (projectile, projectileSpawn.transform.position, Quaternion.identity);
-		//playerProjectileRB = playerProjectile.GetComponent<Rigidbody2D>();
-		//playerProjectileRB.velocity = new Vector3 (0f, projectileSpeed, 0f);
-
 	}
+
+
+
 
 	void OnTriggerEnter2D(Collider2D col){
 
@@ -80,12 +79,28 @@ public class PlayerController : MonoBehaviour {
 		if (enemyProjectile) {
 
 			float hpHit = enemyProjectile.getDamage ();
-
 			scoreKeeper.HealthHit (hpHit);
-
 			enemyProjectile.Hit ();
 
-		}
+			float hp = scoreKeeper.getHP ();
+
+			if (hp <= 0) {
+				
+				Die ();
+
+			}
+
+		}	
+
 	}
 
+	void Die (){
+
+		Debug.Log ("dead");
+		LevelManager man = GameObject.Find ("LevelManager").GetComponent<LevelManager> ();
+		man.LoadLevel ("End");
+		Destroy (gameObject);
+
+	}
+		
 }

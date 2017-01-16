@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class ScoreKeeper : MonoBehaviour {
 
-	private static int score = 0;
-	private static float hp;
+	public static int score = 0;
+	public static float hp;
 
 	public float hpStart = 500f;
 	public Text scoreText;
@@ -36,10 +36,15 @@ public class ScoreKeeper : MonoBehaviour {
 
 	}
 
-	void Reset () {
+	public float getHP (){
+
+		return hp;
+
+	}
+
+	public static void Reset () {
 
 		score = 0;
-		scoreText.text = score.ToString ();
 
 	}
 

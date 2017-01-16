@@ -49,7 +49,6 @@ public class EnemyFormation : MonoBehaviour {
 	// If all dead then...
 
 		if (AllMembersDead ()) {
-			Debug.Log ("Empty Formation");
 			SpawnUntilFull ();
 		}
 

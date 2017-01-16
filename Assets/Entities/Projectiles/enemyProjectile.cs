@@ -23,7 +23,7 @@ public class enemyProjectile : MonoBehaviour {
 	void Update (){
 
 		//Destroy self if velocity reduces to 0
-		if (this.GetComponent<Rigidbody2D>().velocity.y > projectileSpeed) {Destroy (gameObject);}
+		if (GetComponent<Rigidbody2D>().velocity.y > projectileSpeed) {Destroy (gameObject);}
 
 	}
 

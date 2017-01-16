@@ -62,10 +62,10 @@ public class Enemy : MonoBehaviour {
 	//Make 'em Shoot!
 	void ProjectileFire (){
 
-		Vector3 projectilePos = new Vector3 (projectileSpawn.transform.position.x, projectileSpawn.transform.position.y, 1.0f);
+		//Vector3 projectilePos = new Vector3 (projectileSpawn.transform.position.x, projectileSpawn.transform.position.y);
 
 		//GameObject enemyProjectile = Instantiate (projectilePrefab, projectilePos, Quaternion.identity);
-		Instantiate (projectilePrefab, projectilePos, Quaternion.identity);
+		Instantiate (projectilePrefab, projectileSpawn.transform.position, Quaternion.identity);
 	}
 
 }
